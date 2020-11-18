@@ -20,8 +20,12 @@ namespace calculator
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainViewModel _viewModel;
+
         public MainWindow()
         {
+            WindowStyle = WindowStyle.None;
+            DataContext = _viewModel = new MainViewModel();
             InitializeComponent();
         }
     }

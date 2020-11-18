@@ -1,0 +1,15 @@
+C:\Users\Polka\source\repos\calculator\calculator\bin\Debug\calculator.exe.config
+C:\Users\Polka\source\repos\calculator\calculator\bin\Debug\calculator.exe
+C:\Users\Polka\source\repos\calculator\calculator\bin\Debug\calculator.pdb
+C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\calculator.csprojAssemblyReference.cache
+C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\MainWindow.g.cs
+C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\App.g.cs
+C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\calculator_MarkupCompile.cache
+C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\calculator_MarkupCompile.lref
+C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\MainWindow.baml
+C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\calculator.g.resources
+C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\calculator.Properties.Resources.resources
+C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\calculator.csproj.GenerateResource.cache
+C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\calculator.csproj.CoreCompileInputs.cache
+C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\calculator.exe
+C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\calculator.pdb

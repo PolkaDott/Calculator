@@ -23,27 +23,49 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="0" Grid.ColumnSpan="4" Grid.Column="0" />
-        <Button Content="MR" Grid.Row="1" Grid.Column="0" FontSize="40"/>
-        <Button Content="M+" Grid.Row="1" Grid.Column="1" FontSize="40"/>
-        <Button Content="M-" Grid.Row="1" Grid.Column="2" FontSize="40"/>
-        <Button Content="MS" Grid.Row="1" Grid.Column="3" FontSize="40"/>
-        <Button Content="C" Grid.Row="2" Grid.Column="0" FontSize="40"/>
-        <Button Content="÷" Grid.Row="2" Grid.Column="1" FontSize="40" Command="{Binding AddChar}"/>
-        <Button Content="✖" Grid.Row="2" Grid.Column="2" FontSize="20" Command="{Binding AddChar}"/>
-        <Button Content="🠔" Grid.Row="2" Grid.Column="3" FontSize="40" Command="{Binding AddChar}"/>
-        <Button Content="7" Grid.Row="3" Grid.Column="0" FontSize="40" Command="{Binding AddChar}"/>
-        <Button Content="8" Grid.Row="3" Grid.Column="1" FontSize="40" Command="{Binding AddChar}"/>
-        <Button Content="9" Grid.Row="3" Grid.Column="2" FontSize="40" Command="{Binding AddChar}"/>
-        <Button Content="-" Grid.Row="3" Grid.Column="3" FontSize="40" Command="{Binding AddChar}"/>
-        <Button Content="4" Grid.Row="4" Grid.Column="0" FontSize="40" Command="{Binding AddChar}"/>
-        <Button Content="5" Grid.Row="4" Grid.Column="1" FontSize="40" Command="{Binding AddChar}"/>
-        <Button Content="6" Grid.Row="4" Grid.Column="2" FontSize="40" Command="{Binding AddChar}"/>
-        <Button Content="+" Grid.Row="4" Grid.Column="3" FontSize="40" Command="{Binding AddChar}"/>
-        <Button Content="1" Grid.Row="5" Grid.Column="0" FontSize="40" Command="{Binding AddChar}"/>
-        <Button Content="2" Grid.Row="5" Grid.Column="1" FontSize="40" Command="{Binding AddChar}"/>
-        <Button Content="3" Grid.Row="5" Grid.Column="2" FontSize="40" Command="{Binding AddChar}"/>
-        <Button Content="=" Grid.Row="5" Grid.RowSpan="2" Grid.Column="3" FontSize="40"/>
-        <Button Content="0" Grid.ColumnSpan="2" Grid.Row="6" Grid.Column="0" FontSize="40" Command="{Binding AddChar}"/>
-        <Button Content="," Grid.Row="6" Grid.Column="2" FontSize="40" Command="{Binding AddChar}"/>
+        <Button Content="MR" Grid.Row="1" Grid.Column="0" 
+                Style="{StaticResource ButtonStyle}"/>
+        <Button Content="M+" Grid.Row="1" Grid.Column="1" 
+                Style="{StaticResource ButtonStyle}"/>
+        <Button Content="M-" Grid.Row="1" Grid.Column="2" 
+                Style="{StaticResource ButtonStyle}"/>
+        <Button Content="MS" Grid.Row="1" Grid.Column="3" 
+                Style="{StaticResource ButtonStyle}"/>
+        <Button Content="C" Grid.Row="2" Grid.Column="0" 
+                Style="{StaticResource ButtonStyle}"/>
+        <Button Content="÷" Grid.Row="2" Grid.Column="1" 
+                Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
+        <Button Content="✖" Grid.Row="2" Grid.Column="2" FontSize="20" 
+                Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
+        <Button Content="🠔" Grid.Row="2" Grid.Column="3" 
+                Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
+        <Button Content="7" Grid.Row="3" Grid.Column="0" 
+                Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
+        <Button Content="8" Grid.Row="3" Grid.Column="1" 
+                Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
+        <Button Content="9" Grid.Row="3" Grid.Column="2" 
+                Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
+        <Button Content="-" Grid.Row="3" Grid.Column="3" 
+                Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
+        <Button Content="4" Grid.Row="4" Grid.Column="0" 
+                Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
+        <Button Content="5" Grid.Row="4" Grid.Column="1" 
+                Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
+        <Button Content="6" Grid.Row="4" Grid.Column="2" 
+                Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
+        <Button Content="+" Grid.Row="4" Grid.Column="3" 
+                Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
+        <Button Content="1" Grid.Row="5" Grid.Column="0" 
+                Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
+        <Button Content="2" Grid.Row="5" Grid.Column="1" 
+                Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
+        <Button Content="3" Grid.Row="5" Grid.Column="2" 
+                Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
+        <Button Content="=" Grid.Row="5" Grid.RowSpan="2" Grid.Column="3" 
+                Style="{StaticResource ButtonStyle}"/>
+        <Button Content="0" Grid.ColumnSpan="2" Grid.Row="6" Grid.Column="0"
+                Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
+        <Button Content="," Grid.Row="6" Grid.Column="2"
+                Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
     </Grid>
 </Window>

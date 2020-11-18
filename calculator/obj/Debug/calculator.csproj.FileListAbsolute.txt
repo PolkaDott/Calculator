@@ -13,3 +13,4 @@ C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\calculator.csproj.Ge
 C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\calculator.csproj.CoreCompileInputs.cache
 C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\calculator.exe
 C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\calculator.pdb
+C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\App.baml

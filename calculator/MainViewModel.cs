@@ -21,6 +21,9 @@ namespace calculator
         public ICommand AddChar => addChar ?? new RelayCommand<string>(
             (x) => MessageBox.Show(x),
             (x) => true);
+
+        private ICommand closeWindow;
+        public ICommand CloseWindow => closeWindow ?? new RelayCommand<Window>((x) => x.Close(), (x) => true);
         
         public event PropertyChangedEventHandler PropertyChanged;
 

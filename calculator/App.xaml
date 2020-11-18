@@ -5,9 +5,17 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <Style x:Key="ButtonStyle" TargetType="Button">
-            <Setter Property="FontFamily" Value="Arial"/>
-            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="FontFamily" Value="Segoe UI SemiBold"/>
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource self}, Path=Content}"/>
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="#fafafa"/>
+        </Style>
+        <Style x:Key="GreyButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Background" Value="#f0f0f0"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
         </Style>
     </Application.Resources>
+    
 </Application>

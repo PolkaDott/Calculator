@@ -24,9 +24,18 @@ namespace calculator
 
         public MainWindow()
         {
-            WindowStyle = WindowStyle.None;
             DataContext = _viewModel = new MainViewModel();
             InitializeComponent();
+        }
+
+        private void MainWindow_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

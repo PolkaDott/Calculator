@@ -14,21 +14,29 @@ namespace calculator
     {
         public MainViewModel() { }
         private string expression = "";
+        bool mustBeCleared = false;
         public string Expression
         {
             get => expression;
             set
             {
-                expression = value;
-                OnPropertyChanged(nameof(Expression));
+                if (mustBeCleared)
+                {
+                    mustBeCleared = false;
+                    expression = "";
+                }
+                else 
+                {
+                    expression = value;
+                }
+                    OnPropertyChanged(nameof(Expression));
             }
         }
-
         
         private ICommand addChar;
         public ICommand AddChar {
             get => addChar ?? new RelayCommand<string>(
-            (x) => Expression = canAddExpression(x) == true ? Expression + x : Expression,
+            (x) => Expression = CanAddExpression(x) == true ? Expression + x : Expression,
             (x) => true);
         }
 
@@ -44,7 +52,21 @@ namespace calculator
         public ICommand Compute
         {
             get => compute ?? new RelayCommand(
-                () => MessageBox.Show("there is computing"),
+                () => 
+                { 
+                    string result = Computer.Compute(Expression);
+                    if (result == null || result.Length == 0)
+                    {
+                        Expression = "Ошибка!";
+                        mustBeCleared = true;
+                    }
+                    else if (!(Char.IsDigit(result[0]) || result[0] == '-' && Char.IsDigit(result[1])))
+                    {
+                        Expression = result;
+                        mustBeCleared = true;
+                    }
+                    else Expression = result;
+                },
                 () => true);
         }
 
@@ -56,7 +78,7 @@ namespace calculator
                 () => true);
         }
 
-        private bool canAddExpression(string x)
+        private bool CanAddExpression(string x)
         {
             if (x.Length != 1)
                 return false;
@@ -105,6 +127,8 @@ namespace calculator
                         return false;
                 return true;
             }
+            if (x == "-" && Expression.Length == 0)
+                return true;
             if (Expression.Length == 0)
                 return false;
             if (x == "*" || x == "÷" || x == "-" || x == "+")

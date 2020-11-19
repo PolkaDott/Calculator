@@ -27,7 +27,8 @@
                     Content="×" FontSize="20"
                     VerticalAlignment="Top" Click="Button_Click"/>
         <TextBox Grid.Row="1" Grid.ColumnSpan="3" BorderThickness="0" Background="#e6e6e6"
-                 FontSize="50" Text="{Binding Expression}" HorizontalAlignment="right"/>
+                 TextAlignment="Right" Margin="6 0"
+                 FontSize="50" Text="{Binding Expression}"/>
         <Grid Grid.Row="2" Grid.ColumnSpan="3" Margin="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="48*"/>

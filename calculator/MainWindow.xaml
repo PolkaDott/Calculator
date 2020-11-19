@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         MouseLeftButtonDown="MainWindow_OnMouseLeftButtonDown"
+        d:DataContext="{d:DesignInstance local:MainViewModel}"
         AllowsTransparency="True" WindowStyle = "None" Opacity="1"
         Title="MainWindow" Height="394" Width="320">
     <Grid Background="#e6e6e6">
@@ -25,8 +26,9 @@
         <Button Grid.Column="2" BorderThickness="0" Background="#e6e6e6" 
                     Content="×" FontSize="20"
                     VerticalAlignment="Top" Click="Button_Click"/>
-        <TextBox Grid.Row="1" Grid.ColumnSpan="3" BorderThickness="0" Background="#e6e6e6"/>
-        <Grid Grid.Row="2" Grid.ColumnSpan="3" Margin="2">
+        <TextBox Grid.Row="1" Grid.ColumnSpan="3" BorderThickness="0" Background="#e6e6e6"
+                 FontSize="50" Text="{Binding Expression}" HorizontalAlignment="right"/>
+        <Grid Grid.Row="2" Grid.ColumnSpan="3" Margin="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="48*"/>
                 <RowDefinition Height="48*"/>
@@ -41,7 +43,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
+            
             <Button Content="MR" Grid.Row="0" Grid.Column="0" 
                 Style="{StaticResource GreyButtonStyle}"/>
             <Button Content="M+" Grid.Row="0" Grid.Column="1" 
@@ -51,13 +53,13 @@
             <Button Content="MS" Grid.Row="0" Grid.Column="3" 
                 Style="{StaticResource GreyButtonStyle}"/>
             <Button Content="C" Grid.Row="1" Grid.Column="0" 
-                Style="{StaticResource GreyButtonStyle}"/>
+                Command="{Binding Clear}" Style="{StaticResource GreyButtonStyle}"/>
             <Button Content="÷" Grid.Row="1" Grid.Column="1" FontSize="27"
                 Command="{Binding AddChar}" Style="{StaticResource GreyButtonStyle}"/>
-            <Button Content="✖" Grid.Row="1" Grid.Column="2" FontSize="10" 
+            <Button Content="*" Grid.Row="1" Grid.Column="2"  FontSize="30"
                 Command="{Binding AddChar}" Style="{StaticResource GreyButtonStyle}"/>
             <Button Content="🠔" Grid.Row="1" Grid.Column="3" 
-                Command="{Binding AddChar}" Style="{StaticResource GreyButtonStyle}"/>
+                Command="{Binding RemoveChar}" Style="{StaticResource GreyButtonStyle}"/>
             <Button Content="7" Grid.Row="2" Grid.Column="0" 
                 Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
             <Button Content="8" Grid.Row="2" Grid.Column="1" 
@@ -80,8 +82,8 @@
                 Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
             <Button Content="3" Grid.Row="4" Grid.Column="2" 
                 Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
-            <Button Content="=" Grid.Row="4" Grid.RowSpan="2" Grid.Column="3" 
-                Style="{StaticResource GreyButtonStyle}" Background="#8abae0"/>
+            <Button Content="=" Grid.Row="4" Grid.RowSpan="2" Grid.Column="3"  Background="#8abae0"
+                Command="{Binding Compute}" Style="{StaticResource GreyButtonStyle}"/>
             <Button Content="0" Grid.ColumnSpan="2" Grid.Row="5" Grid.Column="0"
                 Command="{Binding AddChar}" Style="{StaticResource ButtonStyle}"/>
             <Button Content="," Grid.Row="5" Grid.Column="2"

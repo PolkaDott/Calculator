@@ -33,9 +33,10 @@ namespace calculator
             DragMove();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ForceClose(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
     }
 }

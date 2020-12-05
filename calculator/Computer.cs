@@ -13,8 +13,10 @@ namespace calculator
             if (expression.Length == 0)
                 return null;
             List<string> elements = ParseExpression(expression);
-            ComputeList(elements);
-            return elements[0];
+            if (elements == null)
+                return null;
+            string result = ComputeList(elements);
+            return result;
         }
 
         private static List<string> ParseExpression(string expression)
@@ -32,28 +34,45 @@ namespace calculator
                         elements.Add(tempElement);
                     }
                 }
-                else if (tempChar == '+' || tempChar == '-' || tempChar == '*' || tempChar == '÷')
+                else if (tempChar == '+' || tempChar == '-' || tempChar == '*' || tempChar == '÷' || tempChar == '(' || tempChar == ')')
                 {
-                    elements.Add(tempElement);
+                    if (tempElement != "")
+                        elements.Add(tempElement);
                     elements.Add(tempChar.ToString());
                     tempElement = "";
                 }
+                else return null;
             }
             return elements;
         }
 
-        private static void ComputeList(List<string> elements)
+        private static string ComputeList(List<string> elements)
         {
             for (int i = 0; i < elements.Count; i++)
             {
-                double result;
-                if (elements[i] == "*")
+                double result = 0;
+                string element = elements[i];
+                if ((element == "*" || element == "+" || element == "-" || element == "÷") && elements[i + 1] == "(")
+                    continue;
+                if (element == "(") 
+                {
+                    int closingBrace = elements.LastIndexOf(")");
+                    if (closingBrace == -1)
+                        throw new Exception();
+                    List<string> subListElements = elements.GetRange(i + 1, closingBrace - i - 1);
+                    string subResult = ComputeList(subListElements);
+                    elements[i] = subResult;
+                    elements.RemoveRange(i + 1, closingBrace-i);
+                    i = 0;
+                    continue;
+                }
+                else if (element == "*")
                     result = Convert.ToDouble(elements[i - 1]) * Convert.ToDouble(elements[i + 1]);
-                else if (elements[i] == "÷")
+                else if (element == "÷")
                     result = Convert.ToDouble(elements[i - 1]) / Convert.ToDouble(elements[i + 1]);
-                else if (elements[i] == "+")
+                else if (element == "+")
                     result = Convert.ToDouble(elements[i - 1]) + Convert.ToDouble(elements[i + 1]);
-                else if (elements[i] == "-")
+                else if (element == "-")
                     result = Convert.ToDouble(elements[i - 1]) - Convert.ToDouble(elements[i + 1]);
                 else continue;
                 elements[i] = result.ToString();
@@ -61,6 +80,7 @@ namespace calculator
                 elements.RemoveAt(i - 1);
                 i = 0;
             }
+            return elements[0];
         }
     }
 }

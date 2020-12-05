@@ -13,142 +13,116 @@ namespace calculator
     class MainViewModel : INotifyPropertyChanged
     {
         public MainViewModel() { }
-        private string expression = "";
-        bool mustBeCleared = false;
-        public string Expression
+        MemoryCell memoryCell = new MemoryCell();
+        Expression expression = new Expression();
+        public string ExpressionField
         {
-            get => expression;
-            set
-            {
-                if (mustBeCleared)
-                {
-                    mustBeCleared = false;
-                    expression = "";
-                }
-                else 
-                {
-                    expression = value;
-                }
-                    OnPropertyChanged(nameof(Expression));
-            }
+            get => expression.Text; // попробовать без свойства тоже надо
+            set => expression.Text = value;
         }
-        
-        private ICommand addChar;
-        public ICommand AddChar {
-            get => addChar ?? new RelayCommand<string>(
-            (x) => Expression = CanAddExpression(x) == true ? Expression + x : Expression,
+
+        private ICommand addCharBind;
+        public ICommand AddCharBind
+        {
+            get => addCharBind ?? new RelayCommand<string>(
+            (x) => 
+            {
+                expression.Push(x);
+                OnPropertyChanged(nameof(ExpressionField));
+            },
             (x) => true);
         }
 
-        private ICommand removeChar;
-        public ICommand RemoveChar
+        private ICommand removeCharBind;
+        public ICommand RemoveCharBind
         {
-            get => removeChar ?? new RelayCommand(
-                () => Expression = Expression.Substring(0, Expression.Length-1),
-                () => Expression.Length != 0);
-        }
-
-        private ICommand compute;
-        public ICommand Compute
-        {
-            get => compute ?? new RelayCommand(
-                () => 
-                { 
-                    string result = Computer.Compute(Expression);
-                    if (result == null || result.Length == 0)
-                    {
-                        Expression = "Ошибка!";
-                        mustBeCleared = true;
-                    }
-                    else if (!(Char.IsDigit(result[0]) || result[0] == '-' && Char.IsDigit(result[1])))
-                    {
-                        Expression = result;
-                        mustBeCleared = true;
-                    }
-                    else Expression = result;
+            get => removeCharBind ?? new RelayCommand(
+                () => {
+                    if (expression.Text.Length == 1)
+                        expression.Null();
+                    else
+                        expression.RemoveLastChar();
+                    OnPropertyChanged(nameof(ExpressionField));
                 },
                 () => true);
         }
 
-        private ICommand clear;
-        public ICommand Clear
+        private ICommand changePanelMemory;
+        public ICommand ChangePanelMemory
         {
-            get => clear ?? new RelayCommand(
-                () => Expression = "",
+            get => changePanelMemory ?? new RelayCommand<System.Windows.Controls.TabControl>(
+                (x) => {
+                    if (x.Visibility == Visibility.Visible)
+                        x.Visibility = Visibility.Collapsed;
+                    else
+                        x.Visibility = Visibility.Visible;
+                }, (x) => true);
+        }
+
+        private ICommand closeApp;
+        public ICommand CloseApp
+        {
+            get => closeApp ?? new RelayCommand<Window>((x) => { x.Close(); }, (x) => true);
+        }
+
+        private ICommand computeBind;
+        public ICommand ComputeBind
+        {
+            get => computeBind ?? new RelayCommand(
+                this.Compute, () => true);
+        }
+
+        private void Compute()
+        {
+            string result = Computer.Compute(expression.Text);
+            if (result == null || result.Length == 0)
+            {
+                expression.Text = "Ошибка!";
+                expression.MustBeCleared = true;
+            }
+            else if (!(Char.IsDigit(result[0]) || result[0] == '-' && Char.IsDigit(result[1])))
+            {
+                expression.Text = result;
+                expression.MustBeCleared = true;
+            }
+            else expression.Text = result;
+            OnPropertyChanged(nameof(ExpressionField));
+        }
+
+        private ICommand clearBind;
+        public ICommand ClearBind
+        {
+            get => clearBind ?? new RelayCommand(
+                () => 
+                {
+                    expression.Null();
+                    OnPropertyChanged(nameof(ExpressionField));
+                },
                 () => true);
         }
 
-        private bool CanAddExpression(string x)
+        private ICommand actMemoryCellBind;
+        public ICommand ActMemoryCellBind
         {
-            if (x.Length != 1)
-                return false;
-            if (x == "0")
-            {
-                if (Expression.Length == 0)
-                    return true;
-                if (Expression.Last() == '0')
+            get => actMemoryCellBind ?? new RelayCommand<string>(
+                (x) =>
                 {
-                    for (int i = Expression.Length - 1; i != 0; i--)
-                    {
-                        char temp = Expression[i];
-                        if (temp == ',' || Char.IsDigit(temp) && temp != '0')
-                            return true;
-                        else if (temp == '*' || temp == '+' || temp == '-' || temp == '÷')
-                            return false;
-                    }
-                    return false;
-                }
-            }
-            if (Char.IsDigit(x[0]))
-            {
-                if (Expression.Length != 0 && Expression.Last() == '0')
-                {
-                    for (int i = Expression.Length - 1; i != 0; i--)
-                    {
-                        char temp = Expression[i];
-                        if (temp == ',' || Char.IsDigit(temp) && temp != '0')
-                            return true;
-                        else if (temp == '*' || temp == '+' || temp == '-' || temp == '÷')
-                            break;
-                    }
-                    Expression = Expression.Substring(0, Expression.Length - 1);
-                }
-                return true;
-            }
-            if (x == ",")
-            {
-                if (Expression.Length == 0 || !Char.IsDigit(Expression.Last()) && Expression.Last() != ',')
-                {
-                    Expression += "0";
-                    return true;
-                }
-                for (int i = Expression.Length - 1; i != 0 && (Expression[i] == ',' || Char.IsDigit(Expression[i])); i--)
-                    if (Expression[i] == ',')
-                        return false;
-                return true;
-            }
-            if (x == "-" && Expression.Length == 0)
-                return true;
-            if (Expression.Length == 0)
-                return false;
-            if (x == "*" || x == "÷" || x == "-" || x == "+")
-            {
-                string lastChar = Expression.Last().ToString();
-                if (lastChar == "*" || lastChar == "÷" || lastChar == "-" || lastChar == "+")
-                {
-                    if (x == lastChar)
-                        return false;
+                    Compute();
+                    if (expression.MustBeCleared)
+                        return;
+                    else if (x == "MR")
+                        expression.Text = memoryCell.Get();
+                    else if (x == "MC")
+                        memoryCell.Zero();
+                    else if (x == "M+")
+                        expression.Text = memoryCell.Add(expression.Text);
+                    else if (x == "M-")
+                        expression.Text = memoryCell.Sub(expression.Text);
                     else
-                    {
-                        Expression =Expression.Substring(0, Expression.Length - 1);
-                        return true;
-                    }
-                }
-                if (lastChar == ",")
-                    Expression = Expression.Substring(0, Expression.Length - 1);
-                return true;
-            }
-            return false;
+                        throw new Exception("What's that? It's wrong in ActMemoryCellBind()!");
+                    OnPropertyChanged(nameof(ExpressionField));
+                },
+                (x) => true);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -158,8 +132,5 @@ namespace calculator
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
-
-
-        
     }
 }

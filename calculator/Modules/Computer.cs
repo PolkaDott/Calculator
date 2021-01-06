@@ -30,7 +30,7 @@ namespace calculator
             expression.Text = result;
         }
 
-        private static string Compute (string expression)
+        public static string Compute (string expression)
         {
             if (expression.Length == 0)
                 return null;

@@ -48,7 +48,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Content="MR" Grid.Row="0" Grid.Column="0" 
+                <Button Content="MS" Grid.Row="0" Grid.Column="0" 
                         Command="{Binding ActMemoryCellBind}" Style="{StaticResource GreyButtonStyle}"/>
                 <Button Content="M+" Grid.Row="0" Grid.Column="1" 
                         Command="{Binding ActMemoryCellBind}" Style="{StaticResource GreyButtonStyle}"/>
@@ -121,7 +121,7 @@
                     </Setter>
                 </Style>
             </TabControl.Resources>
-            <TabItem Header="Журнал" Height="40" Width="158" Background="#ffffff">
+            <TabItem Header="Журнал" Height="40" Width="158" Background="#000000">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -154,31 +154,39 @@
                         Очистить
                     </Button>
                 </Grid>
-                
             </TabItem>
             <TabItem Header="Память" Height="40" Width="158" Background="#e6e6e6">
-                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="25"/>
+                    </Grid.RowDefinitions>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Path=History.HistoryCollection, Mode=OneWay,
-                        UpdateSourceTrigger=PropertyChanged}"
-                                  Width="Auto">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type Expression}">
-                                <DockPanel>
-                                    <TextBox
-                                        Width="300"
-                                        Height="30"
-                                        FontSize="20"
-                                        Text="{Binding EntireExpression, Mode=OneWay}"
-                                        IsReadOnly="True"
-                                        Background="#e6e6e6"
-                                        BorderThickness="0px"
-                                        TextAlignment="Left"/>
-                                </DockPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer> 
+                        <ItemsControl ItemsSource="{Binding Memory.MemoryCollection}"
+                                      Width="Auto">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <DockPanel>
+                                        <TextBox
+                                            Width="300"
+                                            Height="30"
+                                            FontSize="20"
+                                            Text="{Binding ., Mode=OneWay}"
+                                            IsReadOnly="True"
+                                            Background="#e6e6e6"
+                                            BorderThickness="0px"
+                                            TextAlignment="Left"/>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <Button Grid.Row="1" FontSize="18" HorizontalAlignment="Right" 
+                            BorderThickness="0" Background="#e6e6e6" Command="{Binding ClearMemory}">
+                        Очистить
+                    </Button>
+                </Grid>
             </TabItem>
         </TabControl>
     </DockPanel>

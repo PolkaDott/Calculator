@@ -58,14 +58,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Computer.cs" />
-    <Compile Include="Expression.cs" />
+    <Compile Include="Modules\Computer.cs" />
+    <Compile Include="Modules\Expression.cs" />
     <Compile Include="HistoryMemory\HistoryRAM.cs" />
     <Compile Include="HistoryMemory\IHistory.cs" />
     <Compile Include="HistoryMemory\IMemory.cs" />
     <Compile Include="HistoryMemory\MemoryRAM.cs" />
     <Compile Include="MainViewModel.cs" />
-    <Compile Include="MemoryCell.cs" />
+    <Compile Include="Modules\Validator.cs" />
     <Compile Include="RelayCommand.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

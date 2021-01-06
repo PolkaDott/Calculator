@@ -11,9 +11,10 @@ namespace calculator.HistoryMemory
     {
         ObservableCollection<double> MemoryCollection { get; }
         void Add(double value);
-        void Delete(int index);
-        void Increase(double value, int index);
-        void Decrease(double value, int index);
+        void Delete();
+        void Increase(double value);
+        void Decrease(double value);
         void Clear();
+        bool IsEmpty();
     }
 }

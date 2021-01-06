@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace calculator.HistoryMemory
 {
-    class MemoryRAM
+    class MemoryRAM : IMemory
     {
         public ObservableCollection<double> MemoryCollection { get; } = new ObservableCollection<double>();
         public MemoryRAM() { }
@@ -17,24 +17,30 @@ namespace calculator.HistoryMemory
             MemoryCollection.Insert(0, value);
         }
 
-        public void Delete(int index)
+        public void Delete()
         {
-            MemoryCollection.RemoveAt(index);
+            if (MemoryCollection.Count() > 0)
+                MemoryCollection.RemoveAt(0);
         }
 
-        public void Increase(double value, int index)
+        public void Increase(double value)
         {
-            MemoryCollection[index] += value;
+            MemoryCollection[0] += value;
         }
 
-        public void Decrease(double value, int index)
+        public void Decrease(double value)
         {
-            MemoryCollection[index] -= value;
+            MemoryCollection[0] -= value;
         }
 
         public void Clear()
         {
             MemoryCollection.Clear();
+        }
+
+        public bool IsEmpty()
+        {
+            return MemoryCollection.Count() == 0;
         }
     }
 }

@@ -7,17 +7,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using calculator.HistoryMemory;
 
 namespace calculator
 {
     class MainViewModel : INotifyPropertyChanged
     {
-        public MainViewModel() { }
+        public MainViewModel() {  }
         MemoryCell memoryCell = new MemoryCell();
         Expression expression = new Expression();
+        public IHistory History { get; } = new HistoryRAM();
         public string ExpressionField
         {
-            get => expression.Text; // попробовать без свойства тоже надо
+            get => expression.Text;
             set => expression.Text = value;
         }
 
@@ -69,24 +71,25 @@ namespace calculator
         public ICommand ComputeBind
         {
             get => computeBind ?? new RelayCommand(
-                this.Compute, () => true);
+                () => 
+                { 
+                    Computer.ComputeAndOut(expression);
+                    if (!expression.HasError && expression.Formula != expression.Answer)
+                        History.Add(expression);
+                    OnPropertyChanged(nameof(ExpressionField));
+                }, () => true);
         }
 
-        private void Compute()
+        private ICommand clearHistory;
+        public ICommand ClearHistory
         {
-            string result = Computer.Compute(expression.Text);
-            if (result == null || result.Length == 0)
-            {
-                expression.Text = "Ошибка!";
-                expression.MustBeCleared = true;
-            }
-            else if (!(Char.IsDigit(result[0]) || result[0] == '-' && Char.IsDigit(result[1])))
-            {
-                expression.Text = result;
-                expression.MustBeCleared = true;
-            }
-            else expression.Text = result;
-            OnPropertyChanged(nameof(ExpressionField));
+            get => clearHistory ?? new RelayCommand(
+                () =>
+                {
+                    History.Clear();
+                    OnPropertyChanged(nameof(ExpressionField));
+                },
+                () => true);
         }
 
         private ICommand clearBind;
@@ -107,7 +110,7 @@ namespace calculator
             get => actMemoryCellBind ?? new RelayCommand<string>(
                 (x) =>
                 {
-                    Compute();
+                    //Compute();
                     if (expression.MustBeCleared)
                         return;
                     else if (x == "MR")

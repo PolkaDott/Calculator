@@ -8,7 +8,29 @@ namespace calculator
 {
     static public class Computer
     {
-        public static string Compute (string expression)
+        public static void ComputeAndOut(Expression expression)
+        {
+            string result = Compute(expression.Text);
+            expression.HasError = false;
+            if (result == null || result.Length == 0)
+            {
+                expression.Text = "Ошибка!";
+                expression.HasError = true;
+                expression.MustBeCleared = true;
+                return;
+            }
+            else if (!(Char.IsDigit(result[0]) || result[0] == '-' && Char.IsDigit(result[1]))) // ответ - не число
+            {
+                expression.MustBeCleared = true;
+                expression.Formula = expression.Text;
+            }
+            else
+                expression.Formula = expression.Text;
+            expression.Answer = result;
+            expression.Text = result;
+        }
+
+        private static string Compute (string expression)
         {
             if (expression.Length == 0)
                 return null;
@@ -54,7 +76,7 @@ namespace calculator
                 string element = elements[i];
                 if ((element == "*" || element == "+" || element == "-" || element == "÷") && elements[i + 1] == "(")
                     continue;
-                if (element == "(") 
+                if (element == "(")
                 {
                     int closingBrace = elements.LastIndexOf(")");
                     if (closingBrace == -1)

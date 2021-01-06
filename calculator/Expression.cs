@@ -8,11 +8,15 @@ using System.Windows;
 
 namespace calculator
 {
-    class Expression
+    public class Expression
     {
         public bool MustBeCleared { get; set; }
+        public bool HasError { get; set; }
         private string text = "0";
         public string Text { get => text; set => text = value; }
+        public string Formula { get; set; }
+        public string Answer { get; set; }
+        public string EntireExpression { get => Formula + " = " + Answer;  }
         public void Push(string x)
         {
             if (MustBeCleared)

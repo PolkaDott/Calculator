@@ -25,7 +25,7 @@ namespace UnitTests
         [Test]
         public void Compute_ShouldReturn47And25_WhenArgsAre7Multiply3Divide4Multiply8()
         {
-            Computer.Compute("7*3÷4*8").Should().Be("47");
+            Computer.Compute("7*3÷4*8").Should().Be("42");
         }
        
 

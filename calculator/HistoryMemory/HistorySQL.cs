@@ -9,7 +9,8 @@ namespace calculator.HistoryMemory
     {
         public ObservableCollection<Expression> HistoryCollection { get; } = new ObservableCollection<Expression>();
         private string filePath;
-        public HistorySQL(string path = "calculator.db") {
+        public HistorySQL(string path = "calculator.db") 
+        {
             filePath = path;
             if (HistoryCollection is null)
                 HistoryCollection = new ObservableCollection<Expression>();

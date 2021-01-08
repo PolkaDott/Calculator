@@ -82,6 +82,7 @@
     <Compile Include="HistoryMemory\HistoryJSON.cs" />
     <Compile Include="HistoryMemory\HistorySQL.cs" />
     <Compile Include="HistoryMemory\MemoryJSON.cs" />
+    <Compile Include="HistoryMemory\MemorySQL.cs" />
     <Compile Include="Modules\Computer.cs" />
     <Compile Include="Modules\Expression.cs" />
     <Compile Include="HistoryMemory\HistoryRAM.cs" />

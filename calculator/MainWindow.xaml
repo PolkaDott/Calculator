@@ -30,8 +30,8 @@
                             Content="×" FontSize="20" Margin="0,0,0,1"
                             Height="29" VerticalAlignment="Bottom" Click="ForceClose"/>
             <TextBox Grid.Row="1" Grid.ColumnSpan="3" BorderThickness="0" Background="#e6e6e6"
-                         TextAlignment="Right" Margin="6 0"
-                         FontSize="50" Text="{Binding ExpressionField}"/>
+                         TextAlignment="Right" Margin="1 0"
+                         FontSize="50" Text="{Binding ExpressionField, ValidatesOnDataErrors=True}" />
             <Grid Grid.Row="2" Grid.ColumnSpan="3" Margin="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="48*"/>

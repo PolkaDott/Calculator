@@ -11,13 +11,15 @@ using calculator.HistoryMemory;
 
 namespace calculator
 {
-    class MainViewModel : INotifyPropertyChanged
+    class MainViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
-        public MainViewModel() {  }
+        public MainViewModel() { }
         Expression expression = new Expression();
         public IHistory History { get; } = new HistoryRAM();
         public IMemory Memory { get; } = new MemoryRAM();
         public bool HasError { get; set; } = false;
+        protected Dictionary<string, string> errorDictionary = new Dictionary<string, string>();
+
         public string ExpressionField
         {
             get => expression.Text;
@@ -28,8 +30,9 @@ namespace calculator
         public ICommand AddCharBind
         {
             get => addCharBind ?? new RelayCommand<string>(
-            (x) => 
+            (x) =>
             {
+            
                 expression.Push(x);
                 OnPropertyChanged(nameof(ExpressionField));
             },
@@ -158,11 +161,34 @@ namespace calculator
                 (x) => !HasError);
         }
 
+        private ICommand refreshValidation;
+        public ICommand RefreshValidation
+        {
+            get => refreshValidation ?? new RelayCommand(
+                () =>
+                {
+                    OnPropertyChanged(nameof(ExpressionField));
+                },
+                () => true);
+        }
+
+        public string Error =>
+            errorDictionary.Count(x => string.IsNullOrWhiteSpace(x.Value) == false) > 0
+                ? string.Join(Environment.NewLine, errorDictionary.Where(x => string.IsNullOrWhiteSpace(x.Value) == false).GetEnumerator().Current)
+                : null;
+
+        public string this[string columnName] => errorDictionary.ContainsKey(columnName) ? errorDictionary[columnName] : null;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
+            
             HasError = !Validator.Validate(expression.Text);
+            if (HasError)
+                errorDictionary[nameof(ExpressionField)] = "CriticalError!!!";
+            else
+                errorDictionary[nameof(ExpressionField)] = null;
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }

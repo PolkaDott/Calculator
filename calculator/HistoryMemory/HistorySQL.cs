@@ -17,66 +17,48 @@ namespace calculator.HistoryMemory
             if (File.Exists(filePath) == false)
             {
                 SQLiteConnection.CreateFile(filePath);
-                using (SQLiteConnection connection = new SQLiteConnection("Data Source = " + filePath))
-                {
-                    connection.Open();
-                    using (SQLiteCommand command = new SQLiteCommand(connection))
-                    {
-                        command.CommandText =
-                            @"CREATE TABLE MemoryData (
-                                value VARCHAR NOT NULL)";
-                        command.CommandType = CommandType.Text;
-                        command.ExecuteNonQuery();
-                        command.CommandText =
-                            @"CREATE TABLE HistoryData (
-                                formula VARCHAR NOT NULL,
-                                answer VARCHAR NOT NULL)";
-                        command.CommandType = CommandType.Text;
-                        command.ExecuteNonQuery();
-                    }
-                }
+                Execute("CREATE TABLE MemoryData (value VARCHAR NOT NULL)");
+                Execute("CREATE TABLE HistoryData (formula VARCHAR NOT NULL, answer VARCHAR NOT NULL)");
             }
             using (SQLiteConnection connection = new SQLiteConnection("Data Source = " + filePath))
             {
                 connection.Open();
                 SQLiteCommand command = new SQLiteCommand("SELECT * FROM HistoryData", connection);
                 SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-                for (int i = 0; i < dt.Rows.Count; i++)
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                for (int i = 0; i < table.Rows.Count; i++)
                 {
                     Expression expression = new Expression();
-                    expression.Answer = dt.Rows[i][1].ToString();
-                    expression.Formula = dt.Rows[i][0].ToString();
+                    expression.Answer = table.Rows[i][1].ToString();
+                    expression.Formula = table.Rows[i][0].ToString();
                     HistoryCollection.Insert(0, expression);
                 }
             }
         }
 
-        public void Add(Expression expression)
+        private void Execute(string query)
         {
             using (SQLiteConnection connection = new SQLiteConnection("Data Source = " + filePath))
             {
                 connection.Open();
                 SQLiteCommand command = new SQLiteCommand(connection);
-                command.CommandText = @"INSERT INTO HistoryData
-                                            VALUES (@formula, @answer)";
-                command.Parameters.AddWithValue("@formula", expression.Formula);
-                command.Parameters.AddWithValue("@answer", expression.Answer);
+                command.CommandText = query;
                 command.ExecuteNonQuery();
             }
+        }
+
+        public void Add(Expression expression)
+        {
+            Execute(string.Format("INSERT INTO HistoryData " +
+                                            "VALUES('{0}', '{1}')", expression.Formula, expression.Answer));
             HistoryCollection.Insert(0, expression);
         }
 
+
         public void Clear()
         {
-            using (SQLiteConnection connection = new SQLiteConnection("Data Source = " + filePath))
-            {
-                connection.Open();
-                SQLiteCommand command = new SQLiteCommand(connection);
-                command.CommandText = "DELETE FROM HistoryData";
-                command.ExecuteNonQuery();
-            }
+            Execute("DELETE FROM HistoryData");
             HistoryCollection.Clear();
         }
     }

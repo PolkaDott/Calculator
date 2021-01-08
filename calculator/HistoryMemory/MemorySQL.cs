@@ -19,36 +19,20 @@ namespace calculator.HistoryMemory
             if (File.Exists(filePath) == false)
             {
                 SQLiteConnection.CreateFile(filePath);
-                using (SQLiteConnection connection = new SQLiteConnection("Data Source = " + filePath))
-                {
-                    connection.Open();
-                    using (SQLiteCommand command = new SQLiteCommand(connection))
-                    {
-                        command.CommandText =
-                            @"CREATE TABLE MemoryData (
-                                value VARCHAR NOT NULL)";
-                        command.CommandType = CommandType.Text;
-                        command.ExecuteNonQuery();
-                        command.CommandText =
-                            @"CREATE TABLE HistoryData (
-                                formula VARCHAR NOT NULL,
-                                answer VARCHAR NOT NULL)";
-                        command.CommandType = CommandType.Text;
-                        command.ExecuteNonQuery();
-                    }
-                }
+                Execute("CREATE TABLE MemoryData (value VARCHAR NOT NULL)");
+                Execute("CREATE TABLE HistoryData (formula VARCHAR NOT NULL, answer VARCHAR NOT NULL)");
             }
             using (SQLiteConnection connection = new SQLiteConnection("Data Source = " + filePath))
             {
                 connection.Open();
                 SQLiteCommand command = new SQLiteCommand("SELECT * FROM MemoryData", connection);
                 SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-                for (int i = 0; i < dt.Rows.Count; i++)
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                for (int i = 0; i < table.Rows.Count; i++)
                 {
                     double result;
-                    if (double.TryParse(dt.Rows[i][0].ToString(), out result) == false)
+                    if (double.TryParse(table.Rows[i][0].ToString(), out result) == false)
                         throw new Exception("БД содержит недопустимые значения!");
                     MemoryCollection.Insert(0, result);
                 }
@@ -69,74 +53,37 @@ namespace calculator.HistoryMemory
         public void Add(double value)
         {
             MemoryCollection.Insert(0, value);
-            using (SQLiteConnection connection = new SQLiteConnection("Data Source = " + filePath))
-            {
-                connection.Open();
-                SQLiteCommand command = new SQLiteCommand(connection);
-                command.CommandText = @"INSERT INTO MemoryData
-                                            VALUES (@value)";
-                command.Parameters.AddWithValue("@value", value.ToString());
-                command.ExecuteNonQuery();
-            }
+            Execute(string.Format("INSERT INTO MemoryData VALUES('{0}')", value));
         }
 
         public void Delete()
         {
             if (MemoryCollection.Count() > 0)
                 MemoryCollection.RemoveAt(0);
-            using (SQLiteConnection connection = new SQLiteConnection("Data Source = " + filePath))
-            {
-                connection.Open();
-                SQLiteCommand command = new SQLiteCommand(connection);
-                command.CommandText = @"DELETE FROM MemoryData
-                                            WHERE rowid=@rowid";
-                command.Parameters.AddWithValue("@rowid", MemoryCollection.Count()+1);
-                command.ExecuteNonQuery();
-            }
+            Execute(string.Format("DELETE FROM MemoryData " +
+                                         "WHERE rowid = {0}", MemoryCollection.Count() + 1));
         }
 
         public void Increase(double value)
         {
             MemoryCollection[0] += value;
-            using (SQLiteConnection connection = new SQLiteConnection("Data Source = " + filePath))
-            {
-                connection.Open();
-                SQLiteCommand command = new SQLiteCommand(connection);
-                command.CommandText = @"UPDATE MemoryData
-                                            SET value = @value 
-                                            WHERE rowid = @rowid";
-                command.Parameters.AddWithValue("@rowid", MemoryCollection.Count());
-                command.Parameters.AddWithValue("@value", MemoryCollection[0].ToString());
-                command.ExecuteNonQuery();
-            }
+            Execute(string.Format("UPDATE MemoryData " +
+                                      "SET value = {0} " +
+                                      "WHERE rowid = {1}", MemoryCollection[0], MemoryCollection.Count()));
         }
 
         public void Decrease(double value)
         {
             MemoryCollection[0] -= value;
-            using (SQLiteConnection connection = new SQLiteConnection("Data Source = " + filePath))
-            {
-                connection.Open();
-                SQLiteCommand command = new SQLiteCommand(connection);
-                command.CommandText = @"UPDATE MemoryData
-                                            SET value = @value 
-                                            WHERE rowid = @rowid";
-                command.Parameters.AddWithValue("@rowid", MemoryCollection.Count());
-                command.Parameters.AddWithValue("@value", MemoryCollection[0].ToString());
-                command.ExecuteNonQuery();
-            }
+            Execute(string.Format("UPDATE MemoryData " +
+                                      "SET value = {0} " +
+                                      "WHERE rowid = {1}", MemoryCollection[0], MemoryCollection.Count()));
         }
 
         public void Clear()
         {
             MemoryCollection.Clear();
-            using (SQLiteConnection connection = new SQLiteConnection("Data Source = " + filePath))
-            {
-                connection.Open();
-                SQLiteCommand command = new SQLiteCommand(connection);
-                command.CommandText = "DELETE FROM MemoryData";
-                command.ExecuteNonQuery();
-            }
+            Execute(string.Format("DELETE FROM MemoryData"));
         }
 
         public bool IsEmpty()

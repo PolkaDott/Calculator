@@ -15,7 +15,7 @@ namespace calculator
     {
         public MainViewModel() { }
         Expression expression = new Expression();
-        public IHistory History { get; } = new HistoryRAM();
+        public IHistory History { get; } = new HistoryJSON();
         public IMemory Memory { get; } = new MemoryRAM();
         public bool HasError { get; set; } = false;
         protected Dictionary<string, string> errorDictionary = new Dictionary<string, string>();
@@ -79,7 +79,10 @@ namespace calculator
                 { 
                     Computer.ComputeAndOut(expression);
                     if (!expression.HasError && expression.Formula != expression.Answer)
+                    {
                         History.Add(expression);
+                        expression = new Expression(expression);
+                    }
                     OnPropertyChanged(nameof(ExpressionField));
                 }, () => !HasError);
         }

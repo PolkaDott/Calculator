@@ -16,3 +16,5 @@ C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\calculator.pdb
 C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\App.baml
 C:\Users\Polka\source\repos\calculator\calculator\bin\Debug\BlurryControls.dll
 C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\calculator.csproj.CopyComplete
+C:\Users\Polka\source\repos\calculator\calculator\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Polka\source\repos\calculator\calculator\bin\Debug\Newtonsoft.Json.xml

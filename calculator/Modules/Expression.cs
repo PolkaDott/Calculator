@@ -17,6 +17,15 @@ namespace calculator
         public string Formula { get; set; }
         public string Answer { get; set; }
         public string EntireExpression { get => Formula + " = " + Answer;  }
+        public Expression() { }
+        public Expression(Expression exp)
+        {
+            MustBeCleared = exp.MustBeCleared;
+            HasError = exp.HasError;
+            text = exp.text;
+            Formula = exp.Formula;
+            Answer = exp.Answer;
+        }
         public void Push(string x)
         {
             if (MustBeCleared)

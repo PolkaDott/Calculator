@@ -15,7 +15,7 @@ namespace calculator
     {
         public MainViewModel() { }
         Expression expression = new Expression();
-        public IHistory History { get; } = new HistoryJSON();
+        public IHistory History { get; } = new HistorySQL();
         public IMemory Memory { get; } = new MemoryJSON();
         public bool HasError { get; set; } = false;
         protected Dictionary<string, string> errorDictionary = new Dictionary<string, string>();

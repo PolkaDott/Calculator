@@ -18,3 +18,13 @@ C:\Users\Polka\source\repos\calculator\calculator\bin\Debug\BlurryControls.dll
 C:\Users\Polka\source\repos\calculator\calculator\obj\Debug\calculator.csproj.CopyComplete
 C:\Users\Polka\source\repos\calculator\calculator\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Polka\source\repos\calculator\calculator\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Polka\source\repos\calculator\calculator\bin\Debug\System.Buffers.dll
+C:\Users\Polka\source\repos\calculator\calculator\bin\Debug\System.Data.SQLite.dll
+C:\Users\Polka\source\repos\calculator\calculator\bin\Debug\System.Memory.dll
+C:\Users\Polka\source\repos\calculator\calculator\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\Polka\source\repos\calculator\calculator\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Polka\source\repos\calculator\calculator\bin\Debug\System.Buffers.xml
+C:\Users\Polka\source\repos\calculator\calculator\bin\Debug\System.Data.SQLite.xml
+C:\Users\Polka\source\repos\calculator\calculator\bin\Debug\System.Memory.xml
+C:\Users\Polka\source\repos\calculator\calculator\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\Polka\source\repos\calculator\calculator\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml

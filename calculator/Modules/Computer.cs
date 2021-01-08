@@ -72,10 +72,7 @@ namespace calculator
         {
             for (int i = 0; i < elements.Count; i++)
             {
-                double result = 0;
                 string element = elements[i];
-                if ((element == "*" || element == "+" || element == "-" || element == "÷") && elements[i + 1] == "(")
-                    continue;
                 if (element == "(")
                 {
                     int closingBrace = elements.LastIndexOf(")");
@@ -86,13 +83,27 @@ namespace calculator
                     elements[i] = subResult;
                     elements.RemoveRange(i + 1, closingBrace-i);
                     i = 0;
-                    continue;
                 }
-                else if (element == "*")
+            }
+            for (int i = 0; i < elements.Count; i++)
+            {
+                double result = 0;
+                string element = elements[i];
+                if (element == "*")
                     result = Convert.ToDouble(elements[i - 1]) * Convert.ToDouble(elements[i + 1]);
                 else if (element == "÷")
                     result = Convert.ToDouble(elements[i - 1]) / Convert.ToDouble(elements[i + 1]);
-                else if (element == "+")
+                else continue;
+                elements[i] = result.ToString();
+                elements.RemoveAt(i + 1);
+                elements.RemoveAt(i - 1);
+                i = 0;
+            }
+            for (int i = 0; i < elements.Count; i++)
+            {
+                double result = 0;
+                string element = elements[i];
+                if (element == "+")
                     result = Convert.ToDouble(elements[i - 1]) + Convert.ToDouble(elements[i + 1]);
                 else if (element == "-")
                     result = Convert.ToDouble(elements[i - 1]) - Convert.ToDouble(elements[i + 1]);

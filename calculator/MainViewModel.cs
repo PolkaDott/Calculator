@@ -76,8 +76,17 @@ namespace calculator
         {
             get => computeBind ?? new RelayCommand(
                 () => 
-                { 
-                    Computer.ComputeAndOut(expression);
+                {
+                    try
+                    {
+                        Computer.ComputeAndOut(expression);
+                    }
+                    catch
+                    {
+                        expression.Text = "Ошибка!";
+                        expression.HasError = true;
+                        expression.MustBeCleared = true;
+                    }
                     if (!expression.HasError && expression.Formula != expression.Answer)
                     {
                         History.Add(expression);
@@ -129,7 +138,16 @@ namespace calculator
             get => actMemoryCellBind ?? new RelayCommand<string>(
                 (x) =>
                 {
-                    Computer.ComputeAndOut(expression);
+                    try
+                    {
+                        Computer.ComputeAndOut(expression);
+                    }
+                    catch
+                    {
+                        expression.Text = "Ошибка!";
+                        expression.HasError = true;
+                        expression.MustBeCleared = true;
+                    }
                     if (expression.MustBeCleared)
                         return;
                     else if (x == "MS")

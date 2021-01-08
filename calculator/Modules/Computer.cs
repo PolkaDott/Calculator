@@ -89,18 +89,11 @@ namespace calculator
             {
                 double result = 0;
                 string element = elements[i];
-                try
-                {
-                    if (element == "*")
-                        result = Convert.ToDouble(elements[i - 1]) * Convert.ToDouble(elements[i + 1]);
-                    else if (element == "÷")
-                        result = Convert.ToDouble(elements[i - 1]) / Convert.ToDouble(elements[i + 1]);
-                    else continue;
-                }
-                catch
-                {
-                    throw new Exception();
-                }
+                if (element == "*")
+                    result = Convert.ToDouble(elements[i - 1]) * Convert.ToDouble(elements[i + 1]);
+                else if (element == "÷")
+                    result = Convert.ToDouble(elements[i - 1]) / Convert.ToDouble(elements[i + 1]);
+                else continue;
                 elements[i] = result.ToString();
                 elements.RemoveAt(i + 1);
                 elements.RemoveAt(i - 1);
